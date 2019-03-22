@@ -234,7 +234,7 @@ class PlaybookExecutor:
         '''
 
         if play.serial_inv_tier is None:
-            display.vv("tiering by inventory item %s" % play.serial_group)
+            display.vv("tiering by inventory item %s" % play.serial_inv_tier)
             serialized_batches = self._get_batches_from_int(play)
         else:
             serialized_batches = self._get_batches_from_inventory(play)
@@ -244,7 +244,7 @@ class PlaybookExecutor:
     def _get_batches_from_inventory(self, play):
         # make sure we have a unique list of hosts
         all_hosts = self._inventory.get_hosts(play.hosts)
-        inventory_item = play.serial_group
+        inventory_item = play.serial_inv_tier
 
         host_tiers = {}
         for host in all_hosts:
@@ -261,7 +261,7 @@ class PlaybookExecutor:
         return serialized_batches
 
 
-    def _batches_from_int(self, all_hosts, play):
+    def _get_batches_from_int(self, play):
         # make sure we have a unique list of hosts
         all_hosts = self._inventory.get_hosts(play.hosts, order=play.order)
         all_hosts_len = len(all_hosts)
